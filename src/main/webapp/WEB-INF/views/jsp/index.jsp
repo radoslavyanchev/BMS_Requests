@@ -11,7 +11,7 @@
 <body>
 	<form action="signIn" method="post" commandName="user">
 		<input type="text" placeholder="Username"
-			pattern=".{5,}" /><br><br>
+			pattern=".{6,}" /><br><br>
 			 <input	type="password" placeholder="Password" pattern=".{6,}" /><br><br>
 		<button>Login</button>
 	</form>

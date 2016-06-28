@@ -5,19 +5,29 @@ import com.bsm.exception.UsernameException;
 public class User {
 	private int id;
 	private String name;
-	private int deparment;
+	private Department deparment;
 	private String password;
-	
-	public User(int id, String name, int deparment, String password) {
+
+	public User(int id, String name, Department deparment, String password) {
 		this.id = id;
-		setName(name);
-		setDeparment(deparment);
+		try {
+			setName(name);
+		} catch (UsernameException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		setDepartment(deparment);
 		setPassword(password);
 	}
 
-	public User(String name, int deparment, String password) {
-		setName(name);
-		setDeparment(deparment);
+	public User(String name, Department deparment, String password) {
+		try {
+			setName(name);
+		} catch (UsernameException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		setDepartment(deparment);
 		setPassword(password);
 	}
 
@@ -25,35 +35,28 @@ public class User {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name) throws UsernameException {
 		if (name != null) {
-			if (name.matches(
-					"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)")) {
+			if (name.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)")) {
 				this.name = name;
 			}
 		} else {
-			try {
-				throw new UsernameException("Your username is incorrect.Please try again!");
-			} catch (UsernameException e) {
-				e.getMessage();
-			}
+			throw new UsernameException("Your username is incorrect.Please try again!");
 		}
 	}
 
-	public int getDeparment() {
+	public Department getDepartment() {
 		return deparment;
 	}
 
-	public void setDeparment(int deparment) {
-		this.deparment = deparment;
+	public void setDepartment(Department deparment) {
+		if (deparment != null) {
+			this.deparment = deparment;
+		}
 	}
 
 	public String getPassword() {
@@ -61,11 +64,9 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		if (password != null) {
+			this.password = password;
+		}
 	}
-	
-	
-	
-	
-	
+
 }
