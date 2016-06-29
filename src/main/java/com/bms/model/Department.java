@@ -24,7 +24,7 @@ public class Department {
 		return name;
 	}
 
-	public void setName(String name) throws DeparmentException {
+	private void setName(String name) throws DeparmentException {
 		if (name.length() > 1) {
 			this.name = name;
 		} else {
