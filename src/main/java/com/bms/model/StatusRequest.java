@@ -6,7 +6,19 @@ public class StatusRequest {
 	private int id;
 	private String name;
 
+	// Creat Status from DB
 	public StatusRequest(int id, String name) {
+		this.id = id;
+		try {
+			setName(name);
+		} catch (StatusRequestExceptions e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+	}
+
+	// Creat Status in DB
+	public StatusRequest(String name) {
 		this.id = id;
 		try {
 			setName(name);

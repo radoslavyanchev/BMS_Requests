@@ -1,5 +1,6 @@
 package com.bms.model;
 
+import com.bsm.exception.DeparmentException;
 import com.bsm.exception.ProductException;
 
 public class Product {
@@ -7,25 +8,31 @@ public class Product {
 	private String name;
 	private Department deparment;
 
+	//Create product from DB
 	public Product(int id, String name, Department deparment) {
 		this.id = id;
 		try {
 			setName(name);
-		} catch (ProductException e) {
+			setDeparment(deparment);
+		} catch (ProductException | DeparmentException e) {
 			e.getMessage();
 			e.printStackTrace();
 		}
-		setDeparment(deparment);
+	}
+
+	// Create new product in DB
+	public Product(String name, Department deparment) {
+		try {
+			setName(name);
+			setDeparment(deparment);
+		} catch (ProductException | DeparmentException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
 	}
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		if (id > 0) {
-			this.id = id;
-		}
 	}
 
 	public String getName() {
@@ -44,9 +51,11 @@ public class Product {
 		return deparment;
 	}
 
-	public void setDeparment(Department deparment) {
+	public void setDeparment(Department deparment) throws DeparmentException {
 		if (deparment != null) {
 			this.deparment = deparment;
+		} else {
+			throw new DeparmentException("Invalid deparment for product");
 		}
 
 	}

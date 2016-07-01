@@ -5,12 +5,14 @@ public class Request {
 	private Department fromDeparment;
 	private Department forDeparment;
 
+	// Create Request from DB
 	public Request(int id, Department fromDeparment, Department forDeparment) {
 		this.id = id;
 		this.fromDeparment = fromDeparment;
 		this.forDeparment = forDeparment;
 	}
 
+	// Create Request ind DB
 	public Request(Department fromDeparment, Department forDeparment) {
 		this.fromDeparment = fromDeparment;
 		this.forDeparment = forDeparment;

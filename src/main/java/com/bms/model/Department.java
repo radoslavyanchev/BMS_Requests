@@ -6,8 +6,18 @@ public class Department {
 	int id;
 	String name;
 
+	// Create department form DB
 	public Department(int id, String name) {
 		this.id = id;
+		try {
+			setName(name);
+		} catch (DeparmentException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+	}
+	//Create department in DB
+	public Department(String name) {
 		try {
 			setName(name);
 		} catch (DeparmentException e) {

@@ -8,6 +8,7 @@ public class User {
 	private Department deparment;
 	private String password;
 
+	//Creat user form DB
 	public User(int id, String name, Department deparment, String password) {
 		this.id = id;
 		try {
@@ -19,7 +20,7 @@ public class User {
 		setDepartment(deparment);
 		setPassword(password);
 	}
-
+	//Creat new user in DB
 	public User(String name, Department deparment, String password) {
 		try {
 			setName(name);
