@@ -3,34 +3,30 @@ package com.bms.model;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.bsm.exception.ProductException;
+
 public class ProductDAO extends AbstractDAO {
 
-	public ProductDAO() {
-		public void createProduct(Product product){
-			PreparedStatement ps = null;
-			if (product != null) {
-				try {
-					ps = getCon().prepareStatement("INSERT INTO product(name, deparment) VALUES(null,?,?);");
+	public void addProduct(Product product) throws ProductException {
+		PreparedStatement ps = null;
+		if (product != null) {
+			try {
+				ps = getCon().prepareStatement("INSERT INTO product(name, deparment) VALUES(null,?,?);");
 
-					ps.setInt(1, new StateDAO().getStateByName(clip.getState()));
-					ps.setString(2, clip.getDescription());
-					ps.setInt(3, clip.getViews());
-					ps.setInt(4, clip.getCategory().getCategoryID());
-					ps.setInt(5, clip.getClipID());
-					ps.executeUpdate();
+				ps.setString(1, product.getName());
+				ps.setInt(2, product.getDeparment().getId());
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new ProductException("Update failed");
+			} finally {
+				try {
+					if (ps != null)
+						ps.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					throw new UserProblemException("Update failed");
-				} finally {
-					try {
-						if (ps != null)
-							ps.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
 				}
 			}
 		}
 	}
-
 }

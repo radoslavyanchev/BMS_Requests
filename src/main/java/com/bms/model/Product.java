@@ -7,6 +7,12 @@ public class Product {
 	private int id;
 	private String name;
 	private Department deparment;
+	
+
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	//Create product from DB
 	public Product(int id, String name, Department deparment) {

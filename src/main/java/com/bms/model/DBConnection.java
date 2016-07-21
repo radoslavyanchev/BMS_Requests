@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class DBConnection {
 
 	private static final String DB_PASSWORD = "";
-	private static final String DB_USER = "bms_request";
+	private static final String DB_USER = "root";
 	private static final String DATABASE = "bms_requests";
 	private static final String DB_PORT = "8888";
 	private static final String DB_HOST = "127.0.0.1";
