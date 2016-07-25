@@ -13,14 +13,13 @@
 <body>
 
 	<p>Форма за въвеждане на нови продукти</p>
-	<springForm:form method="get" modelAttribute="product">
-		<springForm:input type="text" path="name"
-			placeholder="Име на продукта" pattern=".{3,}" />
-		<br>
-		<br>
-		<select id="department" name="departments">
+	<springForm:form action="product" method="post" modelAttribute="product" >
+		<springForm:input type="text" path="name" placeholder="Име на продукта" pattern=".{3,}" /><br><br>
+		<select id="department" name="department">
+		
 		<!-- Var mi e promenlivata items e masiva-->
-			<c:forEach var="department" items="${departments}">
+		
+			<c:forEach var="department" items="${departments}" >
 				<option value="${department.id}">${department.name}</option>
 			</c:forEach>
 		</select>

@@ -11,7 +11,7 @@ public class ProductDAO extends AbstractDAO {
 		PreparedStatement ps = null;
 		if (product != null) {
 			try {
-				ps = getCon().prepareStatement("INSERT INTO product(name, deparment) VALUES(null,?,?);");
+				ps = getCon().prepareStatement("INSERT INTO products(name, deparment) VALUES(?,?);");
 
 				ps.setString(1, product.getName());
 				ps.setInt(2, product.getDeparment().getId());

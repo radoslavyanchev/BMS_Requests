@@ -10,16 +10,15 @@ import com.bsm.exception.DeparmentException;
 
 public class DepartmentDAO extends AbstractDAO {
 
-	private static final String SELECT_ALL_DEPARMENTS = "SELECT * FROM departments;";
+	private static final String SELECT_ALL_DEPARTMENTS = "SELECT * FROM departments;";
+	private static final String SELECT_DEPARTMENT_BY_ID = "SELECT * FROM departments where id=?;";
 
 	public List<Department> selectAllDeparments() throws DeparmentException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			System.out.println("1111111111111111111");
-			ps = getCon().prepareStatement(SELECT_ALL_DEPARMENTS);
-			System.out.println("2222222222222");
+			ps = getCon().prepareStatement(SELECT_ALL_DEPARTMENTS);
 			List<Department> departments = new ArrayList<Department>();
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -43,6 +42,34 @@ public class DepartmentDAO extends AbstractDAO {
 			}
 		}
 
+	}
+
+	public Department getDepartmentById(int id) throws DeparmentException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = getCon().prepareStatement(SELECT_DEPARTMENT_BY_ID);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			rs.next();
+			int departmentID = rs.getInt(1);
+			String departmentName = rs.getString(2);
+			Department department = new Department(departmentID, departmentName);
+			return department;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DeparmentException("Select deparment by id error");
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (rs != null)
+					rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
