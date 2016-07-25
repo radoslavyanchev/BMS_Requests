@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bms.model.DeparmentDAO;
+import com.bms.model.DepartmentDAO;
 import com.bms.model.Department;
 import com.bms.model.Product;
 import com.bsm.exception.DeparmentException;
@@ -24,7 +24,7 @@ public class ProductController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String product(@ModelAttribute Product product, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		DeparmentDAO deparmentDAO = new DeparmentDAO();
+		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		List<Department> departments = new ArrayList<Department>();
 
 		// if (request.getSession().getAttribute("user") == null) {
@@ -35,8 +35,11 @@ public class ProductController {
 		} catch (DeparmentException e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("product", new Product());
-		model.addAttribute("deparments", departments);
+		for (int i = 0; i < departments.size(); i++) {
+			System.out.println(departments.get(i).getName());
+		}
+//		model.addAttribute("product", new Product());
+		model.addAttribute("departments", departments);
 
 		return "product";
 	}

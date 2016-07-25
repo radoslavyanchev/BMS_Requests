@@ -8,25 +8,27 @@ import java.util.List;
 
 import com.bsm.exception.DeparmentException;
 
-public class DeparmentDAO extends AbstractDAO {
+public class DepartmentDAO extends AbstractDAO {
 
-	private static final String SELECT_ALL_DEPARMENTS = "SELECT * FROM deparments;";
+	private static final String SELECT_ALL_DEPARMENTS = "SELECT * FROM departments;";
 
 	public List<Department> selectAllDeparments() throws DeparmentException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
+			System.out.println("1111111111111111111");
 			ps = getCon().prepareStatement(SELECT_ALL_DEPARMENTS);
-			List<Department> deparments = new ArrayList<Department>();
+			System.out.println("2222222222222");
+			List<Department> departments = new ArrayList<Department>();
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				int deparmentId = rs.getInt(1);
-				String deparmentName = rs.getString(2);
-				Department deparment = new Department(deparmentId, deparmentName);
-				deparments.add(deparment);
+				int departmentId = rs.getInt(1);
+				String departmentName = rs.getString(2);
+				Department deparment = new Department(departmentId, departmentName);
+				departments.add(deparment);
 			}
-			return deparments;
+			return departments;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DeparmentException("Select all deparments error.");
