@@ -25,17 +25,13 @@ import com.bsm.exception.ProductException;
 public class ProductController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String showProductForm(@ModelAttribute Product product, Model model, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String showProductForm(@ModelAttribute Product product, Model model) {
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		List<Department> departments = new ArrayList<Department>();
 		try {
 			departments = deparmentDAO.selectAllDeparments();
 		} catch (DeparmentException e) {
 			e.printStackTrace();
-		}
-		for (int i = 0; i < departments.size(); i++) {
-			System.out.println(departments.get(i).getName());
 		}
 		model.addAttribute("departments", departments);
 
@@ -48,13 +44,16 @@ public class ProductController {
 		ProductDAO productDAO = new ProductDAO();
 		
 		try {
+			if(departmentId==0){
+				viewModel.addAttribute("error", "Не е избран отдел!");
+			}
 			Department department = departmentDAO.getDepartmentById(departmentId);
 			product.setDeparment(department);
-			System.out.println(product.getName() + product.getDeparment().getId());
 			productDAO.addProduct(product);
 		} catch (ProductException | DeparmentException e) {
-			// TODO Auto-generated catch block
+			viewModel.addAttribute("error", "Има такъв продукт!");
 			e.printStackTrace();
+			return "product";
 		}
 		
 		return "product";
