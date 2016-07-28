@@ -1,20 +1,22 @@
 package com.bms.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.bsm.exception.DeparmentException;
 import com.bsm.exception.ProductException;
 
 public class Product {
 	private int id;
+	@NotNull
+	@Size(min=3, max=30)
 	private String name;
 	private Department deparment;
-	
 
 	public Product() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	//Create product from DB
+	// Create product from DB
 	public Product(int id, String name, Department deparment) {
 		this.id = id;
 		try {
@@ -44,11 +46,12 @@ public class Product {
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) throws ProductException {
-		if (name.length() > 3) {
+		if (name != null) {
 			this.name = name;
 		} else {
+			System.out.println("Преди грешката за името @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			throw new ProductException("Invalid name for product");
 		}
 	}

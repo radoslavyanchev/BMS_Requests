@@ -16,14 +16,19 @@
 	<c:if test="${not empty error}">
 		<p style="color: red">Грешка: ${error}</p>
 	</c:if>
-	<springForm:form action="product" method="post"
-		modelAttribute="product">
-		<springForm:input type="text" path="name"
-			placeholder="Име на продукта" pattern=".{3,}" />
+	<c:if test="${not empty success}">
+		<p style="color: green">${success}</p>
+	</c:if>
+
+	<springForm:form action="product" method="post" commandName="product">
+
+		<springForm:input type="text" placeholder="Име на продукта"
+			path="name" pattern=".{3,}" />
 		<br>
 		<br>
+
 		<select id="department" name="department">
-		<option value="0">Изберете отдел</option>
+			<option value="0">Изберете отдел</option>
 			<!-- Var mi e promenlivata items e masiva-->
 
 			<c:forEach var="department" items="${departments}">
