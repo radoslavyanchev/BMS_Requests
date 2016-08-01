@@ -6,24 +6,18 @@ public class Department {
 	int id;
 	String name;
 
+	public Department() {
+		super();
+	} 
+	
 	// Create department form DB
 	public Department(int id, String name) {
 		this.id = id;
-		try {
-			setName(name);
-		} catch (DeparmentException e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
+		setName(name);
 	}
 	//Create department in DB
 	public Department(String name) {
-		try {
-			setName(name);
-		} catch (DeparmentException e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
+		setName(name);
 	}
 
 	public int getId() {
@@ -34,12 +28,11 @@ public class Department {
 		return name;
 	}
 
-	private void setName(String name) throws DeparmentException {
-		if (name.length() > 1) {
-			this.name = name;
-		} else {
-			throw new DeparmentException("Invalid name for Depatment");
-		}
+	private void setName(String name) {
+		this.name = name;
 	}
-
+	
+	public String toString() { 
+	    return String.valueOf(this.id);
+	} 
 }

@@ -8,35 +8,29 @@ import com.bsm.exception.ProductException;
 
 public class Product {
 	private int id;
+	
 	@NotNull
-	@Size(min=3, max=30)
+	@Size(min=2, max=30)
 	private String name;
-	private Department deparment;
+	
+	@NotNull
+	private Department department;
 
 	public Product() {
+		super();
 	}
-
-	// Create product from DB
-	public Product(int id, String name, Department deparment) {
-		this.id = id;
-		try {
-			setName(name);
-			setDeparment(deparment);
-		} catch (ProductException | DeparmentException e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
-	}
+//
+//	// Create product from DB
+//	public Product(int id, String name, Department deparment) {
+//		this.id = id;
+//			setName(name);
+//			setDepartment(department);
+//	}
 
 	// Create new product in DB
-	public Product(String name, Department deparment) {
-		try {
+	public Product(String name, Department department) {
 			setName(name);
-			setDeparment(deparment);
-		} catch (ProductException | DeparmentException e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
+			setDepartment(department);
 	}
 
 	public int getId() {
@@ -46,27 +40,20 @@ public class Product {
 	public String getName() {
 		return name;
 	}
-	
-	public void setName(String name) throws ProductException {
-		if (name != null) {
-			this.name = name;
-		} else {
-			System.out.println("Преди грешката за името @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-			throw new ProductException("Invalid name for product");
-		}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Department getDeparment() {
-		return deparment;
+	public Department getDepartment() {
+		return this.department;
 	}
 
-	public void setDeparment(Department deparment) throws DeparmentException {
-		if (deparment != null) {
-			this.deparment = deparment;
-		} else {
-			throw new DeparmentException("Invalid deparment for product");
-		}
-
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
+	public String toString() { 
+	    return "ID: '" + this.id + "', Name: '" + this.name + "', Department: " + this.department;
+	} 
 }

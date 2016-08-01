@@ -19,22 +19,22 @@
 	<c:if test="${not empty success}">
 		<p style="color: green">${success}</p>
 	</c:if>
+	
+	<springForm:form action="product" method="post" modelAttribute="product">
 
-	<springForm:form action="product" method="post" commandName="product">
-
-		<springForm:input type="text" placeholder="Име на продукта"
-			path="name" pattern=".{3,}" />
+		<springForm:input type="text" placeholder="Product name" path="name" />
+		<springForm:errors path="name" />
 		<br>
 		<br>
 
-		<select id="department" name="department">
-			<option value="0">Изберете отдел</option>
-			<!-- Var mi e promenlivata items e masiva-->
+		<springForm:select path="department">
+     	    <springForm:option value="" label="--- Select Department ---"></springForm:option>
+		    <springForm:options items="${departmentsList}" itemValue="id" itemLabel="name"></springForm:options>
+		</springForm:select>
+		 
+		<springForm:errors  path="department" />
+		
 
-			<c:forEach var="department" items="${departments}">
-				<option value="${department.id}">${department.name}</option>
-			</c:forEach>
-		</select>
 		<button>Създай</button>
 	</springForm:form>
 </body>

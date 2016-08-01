@@ -3,6 +3,7 @@ package com.bms.model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import com.bsm.exception.ProductException;
 
@@ -21,13 +22,16 @@ public class ProductDAO extends AbstractDAO {
 				ps.setString(1, product.getName());
 				rs = ps.executeQuery();
 				if (rs.next()) {
-					throw new ProductException("This product already exists");
+					throw new ProductException("Product with this name already exists");
 				}
 				ps = getCon().prepareStatement(ADD_PRODUCT);
 
 				ps.setString(1, product.getName());
-				ps.setInt(2, product.getDeparment().getId());
+				ps.setInt(2, product.getDepartment().getId());
 				ps.executeUpdate();
+			} catch (SQLIntegrityConstraintViolationException e) {
+				e.printStackTrace();
+				throw new ProductException("Missing Department");
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new ProductException("Update failed");
