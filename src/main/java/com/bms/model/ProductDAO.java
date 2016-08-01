@@ -22,6 +22,7 @@ public class ProductDAO extends AbstractDAO {
 				ps.setString(1, product.getName());
 				rs = ps.executeQuery();
 				if (rs.next()) {
+					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 					throw new ProductException("Product with this name already exists");
 				}
 				ps = getCon().prepareStatement(ADD_PRODUCT);

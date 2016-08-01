@@ -8,29 +8,29 @@ import com.bsm.exception.ProductException;
 
 public class Product {
 	private int id;
-	
-	@NotNull
-	@Size(min=2, max=30)
+
+	@NotNull(message = "Не сте попълнили името на продукта")
+	@Size(min = 3, message = "Името на продукта не може да съдържа по малко от 3 символа")
 	private String name;
-	
+
 	@NotNull
 	private Department department;
 
 	public Product() {
 		super();
 	}
-//
-//	// Create product from DB
-//	public Product(int id, String name, Department deparment) {
-//		this.id = id;
-//			setName(name);
-//			setDepartment(department);
-//	}
+	//
+	// // Create product from DB
+	// public Product(int id, String name, Department deparment) {
+	// this.id = id;
+	// setName(name);
+	// setDepartment(department);
+	// }
 
 	// Create new product in DB
 	public Product(String name, Department department) {
-			setName(name);
-			setDepartment(department);
+		setName(name);
+		setDepartment(department);
 	}
 
 	public int getId() {
@@ -53,7 +53,7 @@ public class Product {
 		this.department = department;
 	}
 
-	public String toString() { 
-	    return "ID: '" + this.id + "', Name: '" + this.name + "', Department: " + this.department;
-	} 
+	public String toString() {
+		return "ID: '" + this.id + "', Name: '" + this.name + "', Department: " + this.department;
+	}
 }

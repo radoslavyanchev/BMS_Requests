@@ -13,27 +13,36 @@
 <body>
 
 	<p>Форма за въвеждане на нови продукти</p>
-	<c:if test="${not empty error}">
+
+	<!--  <c:if test="${not empty errorDepartment}">
 		<p style="color: red">Грешка: ${error}</p>
 	</c:if>
+	 -->
 	<c:if test="${not empty success}">
 		<p style="color: green">${success}</p>
 	</c:if>
-	
-	<springForm:form action="product" method="post" modelAttribute="product">
+
+	<springForm:form action="product" method="post"
+		modelAttribute="product">
 
 		<springForm:input type="text" placeholder="Product name" path="name" />
-		<springForm:errors path="name" />
+		<label style="color: red"> <springForm:errors path="name" /></label>
+		<c:if test="${not empty errorName}">
+			<label style="color: red">${errorName}</label>
+		</c:if>
 		<br>
 		<br>
-
 		<springForm:select path="department">
-     	    <springForm:option value="" label="--- Select Department ---"></springForm:option>
-		    <springForm:options items="${departmentsList}" itemValue="id" itemLabel="name"></springForm:options>
+			<springForm:option value="" label="--- Select Department ---"></springForm:option>
+			<springForm:options items="${departmentsList}" itemValue="id"
+				itemLabel="name"></springForm:options>
 		</springForm:select>
-		 
-		<springForm:errors  path="department" />
-		
+
+		<c:if test="${not empty errorDepartment}">
+			<label style="color: red">${errorDepartment}</label>
+		</c:if>
+		<br>
+		<br>
 
 		<button>Създай</button>
 	</springForm:form>

@@ -1,7 +1,5 @@
 package com.bms.model;
 
-import com.bsm.exception.DeparmentException;
-
 public class Department {
 	int id;
 	String name;
