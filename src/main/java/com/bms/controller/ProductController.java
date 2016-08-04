@@ -60,11 +60,9 @@ public class ProductController extends WebMvcConfigurerAdapter {
 		} catch (DeparmentException e) {
 			e.printStackTrace();
 		}
-		viewModel.addAttribute("departmentsList", departmentsList);
+//		viewModel.addAttribute("departmentsList", departmentsList);
 
 		if (bindingResult.hasErrors()) {
-			if (bindingResult.hasFieldErrors("department"))
-				viewModel.addAttribute("errorDepartment", "Не е избран отдел.");
 			return "product";
 		}
 

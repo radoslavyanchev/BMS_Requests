@@ -37,10 +37,10 @@
 			<springForm:options items="${departmentsList}" itemValue="id"
 				itemLabel="name"></springForm:options>
 		</springForm:select>
-
-		<c:if test="${not empty errorDepartment}">
+		<label style="color: red"><springForm:errors path="department" /></label>
+		<!-- <c:if test="${not empty errorDepartment}">
 			<label style="color: red">${errorDepartment}</label>
-		</c:if>
+		</c:if> -->
 		<br>
 		<br>
 

@@ -13,7 +13,7 @@ public class Product {
 	@Size(min = 3, message = "Името на продукта не може да съдържа по малко от 3 символа")
 	private String name;
 
-	@NotNull
+	@NotNull(message = "Не сте избрали отдел Ot produkt")
 	private Department department;
 
 	public Product() {
