@@ -9,10 +9,10 @@ import com.bsm.exception.DeparmentException;
 
 @Component
 public class DepartmentEditor  extends PropertyEditorSupport {
-
 	// Converts a String to a Department (when submitting form)
     @Override
     public void setAsText(String text) {
+		System.out.println("V EDINOTORA SME @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     	DepartmentDAO deparmentDAO = new DepartmentDAO();
         Department d = null;
 		try {

@@ -60,7 +60,7 @@ public class ProductController extends WebMvcConfigurerAdapter {
 		} catch (DeparmentException e) {
 			e.printStackTrace();
 		}
-//		viewModel.addAttribute("departmentsList", departmentsList);
+		viewModel.addAttribute("departmentsList", departmentsList);
 
 		if (bindingResult.hasErrors()) {
 			return "product";
@@ -71,12 +71,11 @@ public class ProductController extends WebMvcConfigurerAdapter {
 			productDAO.addProduct(product);
 			viewModel.addAttribute("success", "Въведохте успешно Продукта: <br>" + product.getName());
 		} catch (ProductException e) {
-			 viewModel.addAttribute("errorName", "Продукт с това име съществува");
+			viewModel.addAttribute("errorName", "Продукт с това име съществува");
 			e.printStackTrace();
 			return showForm(product, viewModel);
 		}
 
-		
 		return "product";
 	}
 

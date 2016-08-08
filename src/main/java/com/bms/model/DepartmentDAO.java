@@ -72,4 +72,31 @@ public class DepartmentDAO extends AbstractDAO {
 		}
 	}
 
+	public void addDepartment(Department department) throws DeparmentException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = getCon().prepareStatement("INSERT INTO departments (name) VALUES(?);");
+			System.out.println(department.getName() + " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ DAO");
+			ps.setString(1, department.getName());
+			ps.executeUpdate();
+			if (rs.next()) {
+				throw new DeparmentException("Department with this name already exists");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DeparmentException("Invalid name for deparment");
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (rs != null)
+					rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

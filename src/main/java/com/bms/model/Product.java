@@ -9,11 +9,11 @@ import com.bsm.exception.ProductException;
 public class Product {
 	private int id;
 
+	@Size(min = 3, message = "Името на продукта не може да съдържа по малко от 3 символа P")
 	@NotNull(message = "Не сте попълнили името на продукта")
-	@Size(min = 3, message = "Името на продукта не може да съдържа по малко от 3 символа")
 	private String name;
 
-	@NotNull(message = "Не сте избрали отдел Ot produkt")
+	@NotNull(message = "Не сте избрали отдел")
 	private Department department;
 
 	public Product() {
