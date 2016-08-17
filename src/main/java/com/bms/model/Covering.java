@@ -1,63 +1,57 @@
 package com.bms.model;
 
-import com.bsm.exception.CoveringException;
-import com.bsm.exception.DeparmentException;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Covering {
 	private int id;
+
+	@Size(min = 3, message = "Името на Покритието не може да съдържа по малко от 3 символа")
+	@NotNull(message = "Полето не може да бъде празно.")
 	private String name;
-	private Department deparment;
-	
-	//Create covering from DB
+
+	@NotNull(message = "Не сте избрали отдел.")
+	private Department department;
+
+	public Covering() {
+		super();
+	}
+
+	// Create covering from DB
 	public Covering(int id, String name, Department deparment) {
 		this.id = id;
-		try {
-			setDeparment(deparment);
-			setName(name);
-		} catch (CoveringException | DeparmentException e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
+		setDeparment(deparment);
+		setName(name);
+
 	}
-	
+
 	// Create new covering in DB
 	public Covering(String name, Department deparment) {
-		try {
-			setDeparment(deparment);
-			setName(name);
-		} catch (CoveringException | DeparmentException e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
-
+		setDeparment(deparment);
+		setName(name);
 	}
 
-	private String getName() {
+	public String getName() {
 		return name;
 	}
 
-	private void setName(String name) throws CoveringException {
-		if (name != null) {
-			this.name = name;
-		} else {
-			throw new CoveringException("Invalid name for covering");
-		}
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Department getDeparment() {
-		return deparment;
+	public Department getDepartment() {
+		return department;
 	}
 
-	private void setDeparment(Department deparment) throws DeparmentException {
-		if (deparment != null) {
-			this.deparment = deparment;
-		} else {
-			throw new DeparmentException("Invalid deparment in for cocering.");
-		}
+	public void setDeparment(Department deparment) {
+		this.department = deparment;
 	}
 
 	public int getId() {
 		return id;
 	}
 
+	public String toString() {
+		return "ID: '" + this.id + "', Name: '" + this.name + "', Department: " + this.department;
+	}
 }

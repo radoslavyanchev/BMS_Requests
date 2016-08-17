@@ -6,9 +6,9 @@ import javax.validation.constraints.Size;
 public class Department {
 
 	int id;
-	
+
 	@Size(min = 2, message = "Името на отдела не може да съдържа по малко от 2 символа")
-	@NotNull(message = "Полето не може да бъде празно D")
+	@NotNull(message = "Полето не може да бъде празно.")
 	String name;
 
 	public Department() {
@@ -34,7 +34,7 @@ public class Department {
 		return name;
 	}
 
-	private void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

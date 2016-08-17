@@ -17,14 +17,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.bms.model.DepartmentDAO;
 import com.bms.model.DepartmentEditor;
+import com.bms.model.Covering;
+import com.bms.model.CoveringDAO;
 import com.bms.model.Department;
-import com.bms.model.Product;
-import com.bms.model.ProductDAO;
+import com.bsm.exception.CoveringException;
 import com.bsm.exception.DeparmentException;
-import com.bsm.exception.ProductException;
 
 @Controller
-public class ProductController extends WebMvcConfigurerAdapter {
+public class CoveringController extends WebMvcConfigurerAdapter {
 
 	// trims white spaces from form input
 	@InitBinder
@@ -36,8 +36,8 @@ public class ProductController extends WebMvcConfigurerAdapter {
 		binder.registerCustomEditor(Department.class, new DepartmentEditor());
 	}
 
-	@RequestMapping(value = "/product", method = RequestMethod.GET)
-	public String showForm(Product product, Model viewModel) {
+	@RequestMapping(value = "/covering", method = RequestMethod.GET)
+	public String showForm(Covering covering, Model viewModel) {
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		List<Department> departmentsList = new ArrayList<Department>();
 		try {
@@ -47,11 +47,11 @@ public class ProductController extends WebMvcConfigurerAdapter {
 		}
 		viewModel.addAttribute("departmentsList", departmentsList);
 
-		return "product";
+		return "covering";
 	}
 
-	@RequestMapping(value = "/product", method = RequestMethod.POST)
-	public String checkProductInfo(@Valid Product product, BindingResult bindingResult, Model viewModel) {
+	@RequestMapping(value = "/covering", method = RequestMethod.POST)
+	public String checkProductInfo(@Valid Covering covering, BindingResult bindingResult, Model viewModel) {
 
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		List<Department> departmentsList = new ArrayList<Department>();
@@ -63,20 +63,20 @@ public class ProductController extends WebMvcConfigurerAdapter {
 		viewModel.addAttribute("departmentsList", departmentsList);
 
 		if (bindingResult.hasErrors()) {
-			return "product";
+			return "covering";
 		}
 
 		try {
-			ProductDAO productDAO = new ProductDAO();
-			productDAO.addProduct(product);
-			viewModel.addAttribute("success", "Въведохте успешно Продукта: <br>" + product.getName());
-		} catch (ProductException e) {
-			viewModel.addAttribute("errorName", "Продукт с това име съществува");
+			CoveringDAO coveringDAO = new CoveringDAO();
+			coveringDAO.addCovering(covering);
+			viewModel.addAttribute("success", "Въведохте успешно Покритието: <br>" + covering.getName());
+		} catch (CoveringException e) {
+			viewModel.addAttribute("errorName", "Покритие с това име съществува");
 			e.printStackTrace();
-			return showForm(product, viewModel);
+			return showForm(covering, viewModel);
 		}
 
-		return "product";
+		return "covering";
 	}
 
 }

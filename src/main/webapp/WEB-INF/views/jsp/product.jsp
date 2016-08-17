@@ -23,6 +23,7 @@
 		<springForm:input type="text" placeholder="Product name" path="name" />
 
 		<label style="color: red"> <springForm:errors path="name" /></label>
+		<label style="color: red"> ${errorName}</label>
 		
 		<br><br>
 		<springForm:select path="department">

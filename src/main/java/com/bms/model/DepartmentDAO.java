@@ -10,6 +10,7 @@ import com.bsm.exception.DeparmentException;
 
 public class DepartmentDAO extends AbstractDAO {
 
+	private static final String INSERT_INTO_DEPARTMENTS = "INSERT INTO departments (name) VALUES(?);";
 	private static final String SELECT_ALL_DEPARTMENTS = "SELECT * FROM departments;";
 	private static final String SELECT_DEPARTMENT_BY_ID = "SELECT * FROM departments where id=?;";
 
@@ -77,8 +78,7 @@ public class DepartmentDAO extends AbstractDAO {
 		ResultSet rs = null;
 
 		try {
-			ps = getCon().prepareStatement("INSERT INTO departments (name) VALUES(?);");
-			System.out.println(department.getName() + " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ DAO");
+			ps = getCon().prepareStatement(INSERT_INTO_DEPARTMENTS);
 			ps.setString(1, department.getName());
 			ps.executeUpdate();
 			if (rs.next()) {

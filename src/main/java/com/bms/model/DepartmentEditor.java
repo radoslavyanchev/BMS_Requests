@@ -16,9 +16,11 @@ public class DepartmentEditor  extends PropertyEditorSupport {
     	DepartmentDAO deparmentDAO = new DepartmentDAO();
         Department d = null;
 		try {
+			
 			d = deparmentDAO.getDepartmentById(Integer.parseInt(text));
 		} catch (NumberFormatException | DeparmentException e) {
-			// TODO Auto-generated catch block
+			System.out.println("V EDINOTORA SME @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
 			e.printStackTrace();
 		}
 		

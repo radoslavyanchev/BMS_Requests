@@ -8,26 +8,33 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Department</title>
+<title>Покритие</title>
 </head>
 <body>
 
-	<p>Въвеждане на нов отдел</p>
+	<p>Форма за въвеждане на нови покрития</p>
 	<c:if test="${not empty success}">
 		<p style="color: green">${success}</p>
 	</c:if>
 
-	<springForm:form action="department" method="post"
-		modelAttribute="department">
+	<springForm:form action="covering" method="post"
+		modelAttribute="covering">
 
-		<springForm:input type="text" placeholder="Department name"
-			path="name" />
+		<springForm:input type="text" placeholder="Covering name" path="name" />
 
 		<label style="color: red"> <springForm:errors path="name" /></label>
-			<label style="color: red"> ${errorName}</label>
+		<label style="color: red"> ${errorName}</label>
+		
+		<br><br>
+		<springForm:select path="department">
+			<springForm:option value="" label="--- Select Department ---"></springForm:option>
+			<springForm:options items="${departmentsList}" itemValue="id"
+				itemLabel="name"></springForm:options>
+		</springForm:select>
+		<label style="color: red"><springForm:errors path="department" /></label>
+		<br>
+		<br>
 
-		<br>
-		<br>
 		<button>Създай</button>
 	</springForm:form>
 </body>

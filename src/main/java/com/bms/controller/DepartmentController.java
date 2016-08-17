@@ -1,8 +1,5 @@
 package com.bms.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -20,9 +17,8 @@ import com.bms.model.DepartmentDAO;
 import com.bms.model.DepartmentEditor;
 import com.bsm.exception.DeparmentException;
 
-
 @Controller
-public class DepartmentController extends WebMvcConfigurerAdapter{
+public class DepartmentController extends WebMvcConfigurerAdapter {
 
 	// trims white spaces from form input
 	@InitBinder
@@ -42,45 +38,24 @@ public class DepartmentController extends WebMvcConfigurerAdapter{
 
 	@RequestMapping(value = "/department", method = RequestMethod.POST)
 	public String checkDepartmentInfo(@Valid Department department, BindingResult bindingResult, Model viewModel) {
-		System.err.println(department.getName() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ controler 1" + department);
 
+		if (bindingResult.hasErrors()) {
+			return "department";
+		}
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
-
 		try {
-			System.err.println(department.getName() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ controler 2");
 			deparmentDAO.addDepartment(department);
 		} catch (DeparmentException e) {
+			viewModel.addAttribute("errorName", "Отдел с това име съществува");
 			e.printStackTrace();
-
+			return showForm(department, viewModel);
 		}
 
 		if (bindingResult.hasErrors()) {
 			return "department";
 		}
-		viewModel.addAttribute("success", "Въведохте успешно Продукта: <br>" + department.getName());
+		viewModel.addAttribute("success", "Въведохте успешно Покритието: <br>" + department.getName());
 		return "department";
-		// try {
-		//// newDepartment = deparmentDAO.;
-		// } catch (DeparmentException e) {
-		// e.printStackTrace();
-		// }
-		// viewModel.addAttribute("departmentsList", departmentsList);
-		//
-		// if (bindingResult.hasErrors()) {
-		// return "product";
-		// }
-		//
-		// try {
-		// ProductDAO productDAO = new ProductDAO();
-		// productDAO.addProduct(product);
-		// viewModel.addAttribute("success", "Въведохте успешно Продукта: <br>"
-		// + product.getName());
-		// } catch (ProductException e) {
-		// viewModel.addAttribute("errorName", "Продукт с това име съществува");
-		// e.printStackTrace();
-		// return showForm(product, viewModel);
-		// }
-
 	}
 
 }

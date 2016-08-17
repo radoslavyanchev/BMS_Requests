@@ -19,13 +19,12 @@ public class Product {
 	public Product() {
 		super();
 	}
-	//
-	// // Create product from DB
-	// public Product(int id, String name, Department deparment) {
-	// this.id = id;
-	// setName(name);
-	// setDepartment(department);
-	// }
+	 // Create product from DB
+	 public Product(int id, String name, Department deparment) {
+	 this.id = id;
+	 setName(name);
+	 setDepartment(department);
+	 }
 
 	// Create new product in DB
 	public Product(String name, Department department) {
