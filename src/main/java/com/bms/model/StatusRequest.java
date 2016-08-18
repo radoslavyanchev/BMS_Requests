@@ -1,31 +1,29 @@
 package com.bms.model;
 
-import com.bsm.exception.StatusRequestExceptions;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class StatusRequest {
 	private int id;
+
+	@Size(min = 4, message = "Името на STATUS не може да съдържа по малко от 4 символа")
+	@NotNull(message = "Полето не може да бъде празно.")
 	private String name;
+	
+	public StatusRequest() {
+		super();
+	}	
 
 	// Creat Status from DB
 	public StatusRequest(int id, String name) {
 		this.id = id;
-		try {
-			setName(name);
-		} catch (StatusRequestExceptions e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
+		setName(name);
 	}
 
 	// Creat Status in DB
 	public StatusRequest(String name) {
 		this.id = id;
-		try {
-			setName(name);
-		} catch (StatusRequestExceptions e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
+		setName(name);
 	}
 
 	public int getId() {
@@ -36,12 +34,8 @@ public class StatusRequest {
 		return name;
 	}
 
-	public void setName(String name) throws StatusRequestExceptions {
-		if (name.length() > 5) {
-			this.name = name;
-		} else {
-			throw new StatusRequestExceptions("Invalid name for StatusRequest");
-		}
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

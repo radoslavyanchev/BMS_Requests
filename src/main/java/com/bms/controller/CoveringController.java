@@ -75,7 +75,6 @@ public class CoveringController extends WebMvcConfigurerAdapter {
 			e.printStackTrace();
 			return showForm(covering, viewModel);
 		}
-
 		return "covering";
 	}
 

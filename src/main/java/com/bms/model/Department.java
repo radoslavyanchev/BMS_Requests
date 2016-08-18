@@ -9,7 +9,7 @@ public class Department {
 
 	@Size(min = 2, message = "Името на отдела не може да съдържа по малко от 2 символа")
 	@NotNull(message = "Полето не може да бъде празно.")
-	String name;
+	private String name;
 
 	public Department() {
 		super();
