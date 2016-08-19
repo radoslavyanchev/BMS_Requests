@@ -44,8 +44,11 @@ public class DepartmentController extends WebMvcConfigurerAdapter {
 		}
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		try {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@1");
 			deparmentDAO.addDepartment(department);
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
 		} catch (DeparmentException e) {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@3");
 			viewModel.addAttribute("errorName", "Отдел с това име съществува");
 			e.printStackTrace();
 			return showForm(department, viewModel);
@@ -54,8 +57,9 @@ public class DepartmentController extends WebMvcConfigurerAdapter {
 		if (bindingResult.hasErrors()) {
 			return "department";
 		}
-		viewModel.addAttribute("success", "Въведохте успешно Покритието: <br>" + department.getName());
-		return "department";
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@4");
+		viewModel.addAttribute("success", "Въведохте успешно Отдела: <br>" + department.getName());
+		return showForm(department, viewModel);
 	}
 
 }

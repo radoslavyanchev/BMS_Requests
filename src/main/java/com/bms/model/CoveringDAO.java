@@ -9,8 +9,8 @@ import com.bsm.exception.CoveringException;
 import com.bsm.exception.ProductException;
 
 public class CoveringDAO extends AbstractDAO {
-	private static final String SELECT_COVERING_BY_NAME = "SELECT * FROM covering WHERE name = ?;";
-	private static final String ADD_COVERING = "INSERT INTO covering(name, deparment) VALUES(?,?);";
+	private static final String SELECT_COVERING_BY_NAME = "SELECT * FROM coverings WHERE name = ?;";
+	private static final String ADD_COVERING = "INSERT INTO coverings(name, deparment) VALUES(?,?);";
 
 	public void addCovering(Covering covering) throws CoveringException {
 		PreparedStatement ps = null;

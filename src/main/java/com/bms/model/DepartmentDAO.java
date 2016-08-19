@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bsm.exception.DeparmentException;
+import com.bsm.exception.ProductException;
 
 public class DepartmentDAO extends AbstractDAO {
 
 	private static final String INSERT_INTO_DEPARTMENTS = "INSERT INTO departments (name) VALUES(?);";
 	private static final String SELECT_ALL_DEPARTMENTS = "SELECT * FROM departments;";
 	private static final String SELECT_DEPARTMENT_BY_ID = "SELECT * FROM departments where id=?;";
+	private static final String SELECT_DEPARTMENT_BY_NAME = "SELECT * FROM departments WHERE name = ?;";
 
 	public List<Department> selectAllDeparments() throws DeparmentException {
 		PreparedStatement ps = null;
@@ -78,13 +80,19 @@ public class DepartmentDAO extends AbstractDAO {
 		ResultSet rs = null;
 
 		try {
+			ps = getCon().prepareStatement(SELECT_DEPARTMENT_BY_NAME);
+			ps.setString(1, department.getName());
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				throw new DeparmentException("Deparment with this name already exists");
+			}
 			ps = getCon().prepareStatement(INSERT_INTO_DEPARTMENTS);
 			ps.setString(1, department.getName());
+	
 			ps.executeUpdate();
-			if (rs.next()) {
-				throw new DeparmentException("Department with this name already exists");
-			}
+			
 		} catch (SQLException e) {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@ DEP 2");
 			e.printStackTrace();
 			throw new DeparmentException("Invalid name for deparment");
 		} finally {
