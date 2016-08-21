@@ -80,8 +80,12 @@ public class DepartmentDAO extends AbstractDAO {
 		ResultSet rs = null;
 
 		try {
+			System.out.println(department.getName() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Deparment dao1");
+			System.out.println(getCon());
 			ps = getCon().prepareStatement(SELECT_DEPARTMENT_BY_NAME);
+			
 			ps.setString(1, department.getName());
+			System.out.println(department.getName() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Deparment dao2");
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				throw new DeparmentException("Deparment with this name already exists");

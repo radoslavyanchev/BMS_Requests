@@ -1,5 +1,7 @@
 package com.bms.controller;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -37,14 +39,16 @@ public class DepartmentController extends WebMvcConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/department", method = RequestMethod.POST)
-	public String checkDepartmentInfo(@Valid Department department, BindingResult bindingResult, Model viewModel) {
-
+	public String checkDepartmentInfo(@Valid Department department, BindingResult bindingResult, Model viewModel) throws UnsupportedEncodingException {
+		department.setName(new String (department.getName().getBytes ("iso-8859-1"), "UTF-8"));
+//		new String (s.getBytes ("iso-8859-1"), "UTF-8");
+		System.err.println(department.getName() + "Пешо ти ли си !!!!");
 		if (bindingResult.hasErrors()) {
 			return "department";
 		}
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		try {
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@1");
+			System.out.println(department.getName());
 			deparmentDAO.addDepartment(department);
 			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
 		} catch (DeparmentException e) {
