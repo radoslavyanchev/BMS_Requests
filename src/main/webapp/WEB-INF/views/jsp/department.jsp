@@ -22,7 +22,7 @@
 		modelAttribute="department" accept-charset="UTF-8">
 
 		<springForm:input type="text" placeholder="Department name"
-			path="name" />
+			path="name" accept-charset="UTF-8" />
 
 		<label style="color: red"> <springForm:errors path="name" /></label>
 		<label style="color: red"> ${errorName}</label>
