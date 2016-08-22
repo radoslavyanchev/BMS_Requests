@@ -1,5 +1,6 @@
 package com.bms.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +52,8 @@ public class ProductController extends WebMvcConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.POST)
-	public String checkProductInfo(@Valid Product product, BindingResult bindingResult, Model viewModel) {
-
+	public String checkProductInfo(@Valid Product product, BindingResult bindingResult, Model viewModel) throws UnsupportedEncodingException {
+		product.setName(new String (product.getName().getBytes ("iso-8859-1"), "UTF-8"));
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		List<Department> departmentsList = new ArrayList<Department>();
 		try {

@@ -10,7 +10,7 @@ import com.bsm.exception.ProductException;
 public class ProductDAO extends AbstractDAO {
 
 	private static final String SELECT_PRODUCT_BY_NAME = "SELECT * FROM products WHERE name = ?;";
-	private static final String ADD_PRODUCT = "INSERT INTO products(name, deparment) VALUES(?,?);";
+	private static final String ADD_PRODUCT = "INSERT INTO products(name, department) VALUES(?,?);";
 
 	public void addProduct(Product product) throws ProductException {
 		PreparedStatement ps = null;

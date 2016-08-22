@@ -24,8 +24,9 @@
 
 		<label style="color: red"> <springForm:errors path="name" /></label>
 		<label style="color: red"> ${errorName}</label>
-		
-		<br><br>
+
+		<br>
+		<br>
 		<springForm:select path="department">
 			<springForm:option value="" label="--- Select Department ---"></springForm:option>
 			<springForm:options items="${departmentsList}" itemValue="id"
@@ -34,8 +35,19 @@
 		<label style="color: red"><springForm:errors path="department" /></label>
 		<br>
 		<br>
-
 		<button>Създай</button>
 	</springForm:form>
+	<br>
+	<br>
+
+
+	<form action="coveringDelete" method="post">
+		<c:forEach var="covering" items="${coveringList}">
+			<form action="coveringDelete" method="post">
+				${covering.name}
+				<button>ИЗТРИИ</button>
+				<br> <br>
+			</form>
+		</c:forEach>
 </body>
 </html>

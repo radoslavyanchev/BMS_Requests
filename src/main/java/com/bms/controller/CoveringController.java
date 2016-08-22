@@ -1,5 +1,6 @@
 package com.bms.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +48,47 @@ public class CoveringController extends WebMvcConfigurerAdapter {
 		}
 		viewModel.addAttribute("departmentsList", departmentsList);
 
+		CoveringDAO coveringDAO = new CoveringDAO();
+		List<Covering> coveringList = new ArrayList<Covering>();
+		try {
+			coveringList = coveringDAO.selectAllCoverings();
+		} catch (DeparmentException e) {
+			e.printStackTrace();
+		}
+		viewModel.addAttribute("coveringList", coveringList);
 		return "covering";
 	}
 
 	@RequestMapping(value = "/covering", method = RequestMethod.POST)
-	public String checkProductInfo(@Valid Covering covering, BindingResult bindingResult, Model viewModel) {
+	public String checkCoveringInfo(@Valid Covering covering, BindingResult bindingResult, Model viewModel) throws UnsupportedEncodingException {
+		covering.setName(new String (covering.getName().getBytes ("iso-8859-1"), "UTF-8"));
+		DepartmentDAO deparmentDAO = new DepartmentDAO();
+		List<Department> departmentsList = new ArrayList<Department>();
+		try {
+			departmentsList = deparmentDAO.selectAllDeparments();
+		} catch (DeparmentException e) {
+			e.printStackTrace();
+		}
+		viewModel.addAttribute("departmentsList", departmentsList);
 
+		if (bindingResult.hasErrors()) {
+			return "covering";
+		}
+
+		try {
+			CoveringDAO coveringDAO = new CoveringDAO();
+			coveringDAO.addCovering(covering);
+			viewModel.addAttribute("success", "Въведохте успешно Покритието: <br>" + covering.getName());
+		} catch (CoveringException e) {
+			viewModel.addAttribute("errorName", "Покритие с това име съществува");
+			e.printStackTrace();
+			return showForm(covering, viewModel);
+		}
+		return "covering";
+	}
+	@RequestMapping(value = "/covering", method = RequestMethod.POST)
+	public String coveringDelete(@Valid Covering covering, BindingResult bindingResult, Model viewModel) throws UnsupportedEncodingException {
+		covering.setName(new String (covering.getName().getBytes ("iso-8859-1"), "UTF-8"));
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		List<Department> departmentsList = new ArrayList<Department>();
 		try {

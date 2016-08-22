@@ -20,15 +20,14 @@ public class Covering {
 	// Create covering from DB
 	public Covering(int id, String name, Department deparment) {
 		this.id = id;
-		setDeparment(deparment);
 		setName(name);
-
+		setDepartment(deparment);
 	}
 
 	// Create new covering in DB
 	public Covering(String name, Department deparment) {
-		setDeparment(deparment);
 		setName(name);
+		setDepartment(deparment);
 	}
 
 	public String getName() {
@@ -43,7 +42,7 @@ public class Covering {
 		return department;
 	}
 
-	public void setDeparment(Department deparment) {
+	public void setDepartment(Department deparment) {
 		this.department = deparment;
 	}
 
