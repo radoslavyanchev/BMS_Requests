@@ -14,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.bms.model.DepartmentDAO;
@@ -72,7 +73,7 @@ public class CoveringController extends WebMvcConfigurerAdapter {
 		viewModel.addAttribute("departmentsList", departmentsList);
 
 		if (bindingResult.hasErrors()) {
-			return "covering";
+			return showForm(covering, viewModel);
 		}
 
 		try {
@@ -84,34 +85,22 @@ public class CoveringController extends WebMvcConfigurerAdapter {
 			e.printStackTrace();
 			return showForm(covering, viewModel);
 		}
-		return "covering";
+		return showForm(covering, viewModel);
 	}
-	@RequestMapping(value = "/covering", method = RequestMethod.POST)
-	public String coveringDelete(@Valid Covering covering, BindingResult bindingResult, Model viewModel) throws UnsupportedEncodingException {
-		covering.setName(new String (covering.getName().getBytes ("iso-8859-1"), "UTF-8"));
-		DepartmentDAO deparmentDAO = new DepartmentDAO();
-		List<Department> departmentsList = new ArrayList<Department>();
+	@RequestMapping(value = "/coveringDelete", method = RequestMethod.POST)
+	public String coveringDelete( Covering covering, Model viewModel,@RequestParam("coveringId") int coveringId) {
+		System.out.println(coveringId + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		try {
-			departmentsList = deparmentDAO.selectAllDeparments();
-		} catch (DeparmentException e) {
+			CoveringDAO coveringDAO = new CoveringDAO();
+			coveringDAO.deleteCovering(coveringId);
+			viewModel.addAttribute("success", "Изтрихте успешно Покритието: <br>");
+		} catch (CoveringException e) {
+			viewModel.addAttribute("errorName", "Няма покритие с това ID");
 			e.printStackTrace();
-		}
-		viewModel.addAttribute("departmentsList", departmentsList);
-
-		if (bindingResult.hasErrors()) {
 			return "covering";
 		}
 
-		try {
-			CoveringDAO coveringDAO = new CoveringDAO();
-			coveringDAO.addCovering(covering);
-			viewModel.addAttribute("success", "Въведохте успешно Покритието: <br>" + covering.getName());
-		} catch (CoveringException e) {
-			viewModel.addAttribute("errorName", "Покритие с това име съществува");
-			e.printStackTrace();
-			return showForm(covering, viewModel);
-		}
-		return "covering";
+		return showForm(covering, viewModel);
 	}
 
 }

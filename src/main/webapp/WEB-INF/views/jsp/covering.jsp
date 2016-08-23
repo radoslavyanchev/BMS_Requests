@@ -40,14 +40,13 @@
 	<br>
 	<br>
 
+	<c:forEach var="covering" items="${coveringList}">
+		<form action="coveringDelete" method="post">
+			${covering.name} <input type="submit" name="delete_covering"
+				value="ИЗТРИИ" /> <input type="hidden" name="coveringId"
+				value="${covering.id}" /> <br> <br>
 
-	<form action="coveringDelete" method="post">
-		<c:forEach var="covering" items="${coveringList}">
-			<form action="coveringDelete" method="post">
-				${covering.name}
-				<button>ИЗТРИИ</button>
-				<br> <br>
-			</form>
-		</c:forEach>
+		</form>
+	</c:forEach>
 </body>
 </html>

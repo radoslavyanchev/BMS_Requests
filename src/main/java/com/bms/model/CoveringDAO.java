@@ -51,39 +51,63 @@ public class CoveringDAO extends AbstractDAO {
 			}
 		}
 	}
-	
-	
-	 public List<Covering> selectAllCoverings() throws DeparmentException{
-		 PreparedStatement ps = null;
-			ResultSet rs = null;
 
+	public List<Covering> selectAllCoverings() throws DeparmentException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = getCon().prepareStatement(SELECT_ALL_COVERING);
+			List<Covering> coverings = new ArrayList<Covering>();
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				int coveringId = rs.getInt(1);
+				String covringName = rs.getString(2);
+				int coveringDeparmentId = rs.getInt(3);
+				DepartmentDAO departmentDAO = new DepartmentDAO();
+				Department coveringDepartment = departmentDAO.getDepartmentById(coveringDeparmentId);
+				Covering covering = new Covering(coveringId, covringName, coveringDepartment);
+				coverings.add(covering);
+			}
+			return coverings;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DeparmentException("Select all coverings error.");
+		} finally {
 			try {
-				ps = getCon().prepareStatement(SELECT_ALL_COVERING);
-				List<Covering> coverings = new ArrayList<Covering>();
-				rs = ps.executeQuery();
-				while (rs.next()) {
-					int coveringId = rs.getInt(1);
-					String covringName = rs.getString(2);
-					int coveringDeparmentId = rs.getInt(3);
-					DepartmentDAO departmentDAO = new DepartmentDAO();
-					Department coveringDepartment = departmentDAO.getDepartmentById(coveringDeparmentId);
-					Covering covering = new Covering(coveringId,covringName,coveringDepartment);
-					coverings.add(covering);
-				}
-				return coverings;
+				if (ps != null)
+					ps.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				throw new DeparmentException("Select all coverings error.");
+			}
+		}
+	}
+
+	public void deleteCovering(int coveringId) throws CoveringException {
+		PreparedStatement ps = null;
+
+		if (coveringId > 0) {
+			try {
+				ps = getCon().prepareStatement("DELETE FROM coverings where id=?");
+				ps.setInt(1, coveringId);
+				ps.executeUpdate();
+			} catch (SQLIntegrityConstraintViolationException e) {
+				e.printStackTrace();
+				throw new CoveringException("Missing Department");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new CoveringException("Delete failed");
 			} finally {
 				try {
 					if (ps != null)
 						ps.close();
-					if (rs != null)
-						rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-	 }
+		}
+	}
 
 }
