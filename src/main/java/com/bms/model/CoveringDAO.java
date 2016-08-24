@@ -50,6 +50,7 @@ public class CoveringDAO extends AbstractDAO {
 				}
 			}
 		}
+		throw new CoveringException("Update failed");
 	}
 
 	public List<Covering> selectAllCoverings() throws DeparmentException {
@@ -93,9 +94,6 @@ public class CoveringDAO extends AbstractDAO {
 				ps = getCon().prepareStatement("DELETE FROM coverings where id=?");
 				ps.setInt(1, coveringId);
 				ps.executeUpdate();
-			} catch (SQLIntegrityConstraintViolationException e) {
-				e.printStackTrace();
-				throw new CoveringException("Missing Department");
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new CoveringException("Delete failed");
@@ -107,6 +105,30 @@ public class CoveringDAO extends AbstractDAO {
 					e.printStackTrace();
 				}
 			}
+		}
+		throw new CoveringException("Delete failed");
+	}
+
+	public void editCovering(int coveringId, String coveringNewName) throws CoveringException {
+		PreparedStatement ps = null;
+		if (coveringId > 0) {
+			try {
+				ps = getCon().prepareStatement("UPDATE coverins SET name=? WHERE id=?;");
+				ps.setString(1, coveringNewName);
+				ps.setInt(2, coveringId);
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new CoveringException("Update Field");
+			} finally {
+				try {
+					if (ps != null)
+						ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
 	}
 
