@@ -94,9 +94,10 @@ public class CoveringDAO extends AbstractDAO {
 				ps = getCon().prepareStatement("DELETE FROM coverings where id=?");
 				ps.setInt(1, coveringId);
 				ps.executeUpdate();
+				System.out.println("SLED Izpylnenieto na zaqvkata");
 			} catch (SQLException e) {
 				e.printStackTrace();
-				throw new CoveringException("Delete failed");
+				throw new CoveringException("Delete failed1");
 			} finally {
 				try {
 					if (ps != null)
@@ -106,7 +107,6 @@ public class CoveringDAO extends AbstractDAO {
 				}
 			}
 		}
-		throw new CoveringException("Delete failed");
 	}
 
 	public void editCovering(int coveringId, String coveringNewName) throws CoveringException {
@@ -130,6 +130,38 @@ public class CoveringDAO extends AbstractDAO {
 			}
 
 		}
+	}
+
+	public String selectCoveringNameById(int coveringId) throws CoveringException {
+		String coveringName = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		System.out.println(coveringId);
+		if (coveringId > 0) {
+			try {
+				ps = getCon().prepareStatement("SELECT * FROM coverings WHERE id=?;");
+				ps.setInt(1, coveringId);
+				rs = ps.executeQuery();
+				System.out.println(coveringId);
+				while (rs.next()) {
+					System.out.println("ВЪВ WHILE");
+					coveringName = rs.getString(2);
+				}
+				return coveringName;
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new CoveringException("SELECT Field");
+			} finally {
+				try {
+					if (ps != null)
+						ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		throw new CoveringException("SELECT Field");
 	}
 
 }

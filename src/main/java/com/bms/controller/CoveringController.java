@@ -61,8 +61,9 @@ public class CoveringController extends WebMvcConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/covering", method = RequestMethod.POST)
-	public String checkCoveringInfo(@Valid Covering covering, BindingResult bindingResult, Model viewModel) throws UnsupportedEncodingException {
-		covering.setName(new String (covering.getName().getBytes ("iso-8859-1"), "UTF-8"));
+	public String checkCoveringInfo(@Valid Covering covering, BindingResult bindingResult, Model viewModel)
+			throws UnsupportedEncodingException {
+		covering.setName(new String(covering.getName().getBytes("iso-8859-1"), "UTF-8"));
 		DepartmentDAO deparmentDAO = new DepartmentDAO();
 		List<Department> departmentsList = new ArrayList<Department>();
 		try {
@@ -77,6 +78,7 @@ public class CoveringController extends WebMvcConfigurerAdapter {
 		}
 
 		try {
+
 			CoveringDAO coveringDAO = new CoveringDAO();
 			coveringDAO.addCovering(covering);
 			viewModel.addAttribute("success", "Въведохте успешно Покритието: <br>" + covering.getName());
@@ -87,17 +89,18 @@ public class CoveringController extends WebMvcConfigurerAdapter {
 		}
 		return showForm(covering, viewModel);
 	}
+
 	@RequestMapping(value = "/coveringDelete", method = RequestMethod.POST)
-	public String coveringDelete( Covering covering, Model viewModel,@RequestParam("coveringId") int coveringId) {
-		System.out.println(coveringId + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	public String coveringDelete(Covering covering, Model viewModel, @RequestParam("coveringId") int coveringId) {
 		try {
 			CoveringDAO coveringDAO = new CoveringDAO();
+			String coveringName = coveringDAO.selectCoveringNameById(coveringId);
 			coveringDAO.deleteCovering(coveringId);
-			viewModel.addAttribute("success", "Изтрихте успешно Покритието: <br>");
+			viewModel.addAttribute("success", "Изтрихте успешно Покритието: " + coveringName + "<br>");
 		} catch (CoveringException e) {
 			viewModel.addAttribute("errorName", "Няма покритие с това ID");
 			e.printStackTrace();
-			return "covering";
+			return showForm(covering, viewModel);
 		}
 
 		return showForm(covering, viewModel);
