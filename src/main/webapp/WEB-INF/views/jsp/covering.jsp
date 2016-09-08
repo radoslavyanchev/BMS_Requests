@@ -8,24 +8,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>A product</title>
+<title>Покритие</title>
 </head>
 <body>
 
-	<p>Форма за въвеждане на нови продукти</p>
+	<p>Форма за въвеждане на нови покрития</p>
 	<c:if test="${not empty success}">
 		<p style="color: green">${success}</p>
 	</c:if>
 
-	<springForm:form action="product" method="post"
-		modelAttribute="product">
+	<springForm:form action="covering" method="post"
+		modelAttribute="covering">
 
-		<springForm:input type="text" placeholder="Product name" path="name" />
+		<springForm:input type="text" placeholder="Covering name" path="name" />
 
 		<label style="color: red"> <springForm:errors path="name" /></label>
 		<label style="color: red"> ${errorName}</label>
-		
-		<br><br>
+
+		<br>
+		<br>
 		<springForm:select path="department">
 			<springForm:option value="" label="--- Select Department ---"></springForm:option>
 			<springForm:options items="${departmentsList}" itemValue="id"
@@ -34,8 +35,22 @@
 		<label style="color: red"><springForm:errors path="department" /></label>
 		<br>
 		<br>
-
 		<button>Създай</button>
 	</springForm:form>
+	<br>
+	<br>
+
+	<c:forEach var="covering" items="${coveringList}">
+	
+	<form action="coveringEdit" method="post">
+		<input type="text" name="edit_covering"	value="${covering.name}" /> 
+			<input type="submit" name="edit_covering"	value="Edit" /> 
+				<input type="hidden" name="coveringId" value="${covering.id}" />
+		</form>
+		<form action="coveringDelete" method="post">
+			<input type="submit" name="delete_covering"	value="ИЗТРИИ" /> 
+				<input type="hidden" name="coveringId" value="${covering.id}" /> <br> <br>
+		</form>
+	</c:forEach>
 </body>
 </html>

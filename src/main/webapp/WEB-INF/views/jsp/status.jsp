@@ -8,33 +8,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>A product</title>
+<title>Status</title>
 </head>
 <body>
 
-	<p>Форма за въвеждане на нови продукти</p>
+	<p>Въвеждане на нов STATUS</p>
 	<c:if test="${not empty success}">
 		<p style="color: green">${success}</p>
 	</c:if>
 
-	<springForm:form action="product" method="post"
-		modelAttribute="product">
+	<springForm:form action="status" method="post"
+		modelAttribute="statusRequest">
 
-		<springForm:input type="text" placeholder="Product name" path="name" />
+		<springForm:input type="text" placeholder="Status name"
+			path="name" />
 
 		<label style="color: red"> <springForm:errors path="name" /></label>
-		<label style="color: red"> ${errorName}</label>
-		
-		<br><br>
-		<springForm:select path="department">
-			<springForm:option value="" label="--- Select Department ---"></springForm:option>
-			<springForm:options items="${departmentsList}" itemValue="id"
-				itemLabel="name"></springForm:options>
-		</springForm:select>
-		<label style="color: red"><springForm:errors path="department" /></label>
-		<br>
-		<br>
+			<label style="color: red"> ${errorName}</label>
 
+		<br>
+		<br>
 		<button>Създай</button>
 	</springForm:form>
 </body>
